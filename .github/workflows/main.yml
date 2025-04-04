@@ -2,14 +2,14 @@ name: Auto Update HeroZero
 
 on:
   schedule:
-    - cron: '*/1 * * * *' # كل دقيقة
+    - cron: '*/1 * * * *'  # يحدث كل دقيقة
   workflow_dispatch:
 
 jobs:
   update-json:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Update File
@@ -22,8 +22,8 @@ jobs:
 
       - name: Commit changes
         run: |
-          git config --global user.name "herodev-auto"
-          git config --global user.email "herodev-auto@example.com"
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
           git add herozero.json
-          git commit -m "Auto update herozero.json" || echo "No changes to commit"
+          git commit -m "Auto update herozero.json"
           git push
