@@ -1,0 +1,53 @@
+{
+  "recommendations": [
+    {
+      "symbol": "TSLA",
+      "type": "Call",
+      "contract": "APR 04 290C",
+      "entry_condition": "كسر VWAP + 3 شمعات",
+      "entry": 1.10,
+      "targets": [1.60, 2.00],
+      "stop_loss": 0.80,
+      "reason": "ارتداد من دعم + فوليوم عالي"
+    },
+    {
+      "symbol": "MSTR",
+      "type": "Put",
+      "contract": "APR 04 320P",
+      "entry_condition": "كسر دعم 324",
+      "entry": 1.25,
+      "targets": [1.80, 2.30],
+      "stop_loss": 0.95,
+      "reason": "ضغط بيعي واضح"
+    },
+    {
+      "symbol": "NVDA",
+      "type": "Call",
+      "contract": "APR 04 900C",
+      "entry_condition": "كسر مقاومة 888",
+      "entry": 1.45,
+      "targets": [2.00, 2.60],
+      "stop_loss": 1.10,
+      "reason": "زخم صاعد وفوليوم قوي"
+    }
+  ],
+  "updates": [
+    {
+      "symbol": "TSLA",
+      "status": "اقترب من الهدف الأول",
+      "current_price": 1.55
+    }
+  ],
+  "high_priority": [
+    {
+      "symbol": "AAPL",
+      "type": "Call",
+      "contract": "APR 04 180C",
+      "entry": 1.10,
+      "targets": [1.60, 2.00],
+      "stop_loss": 0.85,
+      "reason": "اختراق مهم بفوليوم عالي جداً",
+      "priority": "very_high"
+    }
+  ]
+}
