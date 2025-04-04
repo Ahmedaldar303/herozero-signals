@@ -1,6 +1,16 @@
 {
-  "recommendations": [],
+  "recommendations": [
+    {
+      "symbol": "MSFT",
+      "type": "Call",
+      "contract": "APR 11 400C",
+      "entry_condition": "كسر مقاومة",
+      "entry": 1.25,
+      "targets": [1.80, 2.50],
+      "stop_loss": 1.00,
+      "reason": "زخم صاعد قوي"
+    }
+  ],
   "updates": [],
-  "high_priority": [],
-  "last_updated": "Fri Apr  4 19:55:01 UTC 2025"
+  "high_priority": []
 }
