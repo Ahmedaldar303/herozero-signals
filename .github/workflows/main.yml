@@ -14,16 +14,17 @@ jobs:
 
       - name: Update File
         run: |
-          echo '{
-            "recommendations": [],
-            "updates": [],
-            "high_priority": []
-          }' > herozero.json
+          echo "{
+            \"recommendations\": [],
+            \"updates\": [],
+            \"high_priority\": [],
+            \"last_updated\": \"$(date -u)\"
+          }" > herozero.json
 
       - name: Commit changes
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
           git add herozero.json
-          git commit -m "Auto update herozero.json"
+          git commit -m "Auto update herozero.json" || echo "No changes to commit"
           git push
