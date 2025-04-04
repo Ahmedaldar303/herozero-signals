@@ -1,0 +1,38 @@
+name: Auto Update HeroZero
+
+on:
+  schedule:
+    - cron: "*/1 * * * *"  # كل دقيقة
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Update herozero.json
+        run: |
+          echo '{
+            "recommendations": [
+              {
+                "symbol": "TSLA",
+                "type": "Call",
+                "contract": "APR 11 290C",
+                "entry_condition": "تحديث تلقائي",
+                "entry": 1.10,
+                "targets": [1.60, 2.00],
+                "stop_loss": 0.80,
+                "reason": "فوليوم عالي"
+              }
+            ]
+          }' > herozero.json
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add herozero.json
+          git commit -m "Auto update at $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes"
+          git push
