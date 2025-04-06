@@ -3,8 +3,8 @@ import requests
 import time
 
 # إعدادات البوت
-BOT_TOKEN = "توكن البوت هنا"
-CHANNEL_ID = "@اسم_القناة_او_القروب"
+BOT_TOKEN = "7734197510:AAHHHUCO2g0YLfQfoCxNWEJgcUk1nZasC_M"
+CHANNEL_ID = "@anythingtestus"
 
 def send_to_telegram(text):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
