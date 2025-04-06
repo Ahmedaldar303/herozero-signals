@@ -20,5 +20,16 @@
       "stop_loss": 0.95,
       "reason": "ضغط بيعي واضح"
     }
+  ],
+  "high_priority": [
+    {
+      "symbol": "NVDA",
+      "type": "Call",
+      "contract": "APR 08 900C",
+      "entry": 1.45,
+      "targets": [2.00, 2.60],
+      "stop_loss": 1.10,
+      "reason": "اختراق مقاومة قوية + زخم شرائي عالي جداً"
+    }
   ]
-}
+} 
