@@ -1,0 +1,24 @@
+{
+  "recommendations": [
+    {
+      "symbol": "TSLA",
+      "type": "Call",
+      "contract": "APR 08 270C",
+      "entry_condition": "كسر VWAP + 3 شمعات",
+      "entry": 1.10,
+      "targets": [1.60, 2.00],
+      "stop_loss": 0.80,
+      "reason": "ارتداد من دعم + فوليوم عالي"
+    },
+    {
+      "symbol": "AAPL",
+      "type": "Put",
+      "contract": "APR 08 180P",
+      "entry_condition": "كسر دعم 182",
+      "entry": 1.25,
+      "targets": [1.80, 2.30],
+      "stop_loss": 0.95,
+      "reason": "ضغط بيعي واضح"
+    }
+  ]
+}
