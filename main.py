@@ -1,54 +1,63 @@
 import json
 import requests
 import time
-import os
 
-# إعدادات التليجرام
-BOT_TOKEN = "توكن البوت"
-CHAT_ID = "معرف القروب أو القناة"
-JSON_URL = "https://raw.githubusercontent.com/herozero-ai/daily-signals/main/herozero.json"
+# إعدادات البوت
+BOT_TOKEN = "توكن البوت هنا"
+CHAT_ID = "آي دي القروب أو القناة"
+DATA_URL = "https://raw.githubusercontent.com/Ahmedaldar303/herozero-signals/main/herozero.json"
 
-# تحميل التوصيات من GitHub
+# دالة تحميل ملف التوصيات
 def load_recommendations():
-    response = requests.get(JSON_URL)
+    response = requests.get(DATA_URL)
     return response.json()
 
-# تنسيق الصفقة بلون مناسب
+# تنسيق رسالة التوصية
 def format_recommendation(index, item):
-    emoji = "🟢" if item["type"].lower() == "call" else "🔴"
-    header = f"🔥 صفقة عالية الجودة – {item['symbol']} 🔥" if item.get("vip") else f"📢 التوصية {index+1}"
-    return f"""{header} – {item['symbol']} – {emoji} {item['type']}
+    emoji = "🟢" if item['type'].lower() == "call" else "🔴"
+    return f"""📢 التوصية {index + 1} – {item['symbol']} – {emoji} **{item['type']}**
 - العقد: {item['contract']}
-- شرط الدخول: {item['entry_condition']}
+- شرط الدخول: {item.get('entry_condition', '—')}
 - الدخول: {item['entry']}
-- الهدف: {item['target1']} ثم {item['target2']}
-- وقف الخسارة: {item['stop']}
+- الهدف: {item['targets'][0]} ثم {item['targets'][1]}
+- وقف الخسارة: {item['stop_loss']}
 - السبب: {item['reason']}"""
 
-# إرسال رسالة إلى تليجرام
+# تنسيق رسالة عالية الجودة
+def format_high_priority(item):
+    emoji = "🟢" if item['type'].lower() == "call" else "🔴"
+    return f"""🔥 **صفقة عالية الجودة – {item['symbol']}** 🔥
+{emoji} **{item['type']}**
+📆 العقد: {item['contract']}
+📈 الدخول: {item['entry']} | 🎯 الأهداف: {item['targets'][0]} → {item['targets'][1]}
+🛑 وقف الخسارة: {item['stop_loss']}
+⚡️ السبب: {item['reason']}"""
+
+# إرسال الرسالة لتلقرام
 def send_message(text):
     url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
-    data = {
+    payload = {
         "chat_id": CHAT_ID,
         "text": text,
         "parse_mode": "Markdown"
     }
-    requests.post(url, data=data)
+    requests.post(url, data=payload)
 
-# الفلترة والإرسال
-def process_recommendations():
+# التشغيل
+def main():
     data = load_recommendations()
-    for i, rec in enumerate(data):
-        try:
-            entry_price = float(rec["entry"])
-            if entry_price > 2.5:
-                continue  # تجاهل العقود الغالية
-            message = format_recommendation(i, rec)
-            send_message(message)
-            time.sleep(2)
-        except Exception as e:
-            print(f"خطأ في التوصية {i}: {e}")
 
-# بدء التنفيذ
+    # توصيات عادية
+    for idx, rec in enumerate(data.get("recommendations", [])):
+        msg = format_recommendation(idx, rec)
+        send_message(msg)
+        time.sleep(1)  # عشان ما تتكرر بسرعة
+
+    # توصيات عالية الجودة
+    for rec in data.get("high_priority", []):
+        msg = format_high_priority(rec)
+        send_message(msg)
+        time.sleep(1)
+
 if __name__ == "__main__":
-    process_recommendations()
+    main()
