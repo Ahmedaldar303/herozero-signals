@@ -1,7 +1,6 @@
 import json
 import os
 import requests
-import datetime
 
 TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 CHAT_ID = os.environ.get("CHAT_ID")
@@ -36,23 +35,18 @@ def send_telegram_message(msg):
     }
     requests.post(url, json=payload)
 
-def check_and_send():
-    now = datetime.datetime.now()
-    if now.hour == 15 and now.minute == 30:  # الساعة 3:30 مساءً بتوقيت السعودية
-        if os.path.exists(DATA_FILE):
-            with open(DATA_FILE, "r") as file:
-                data = json.load(file)
-                if data:
-                    trade = data[0]
-                    unique_id = f"{trade['ticker']}_{trade['contract']}"
-                    last_sent = load_last_sent()
-                    if unique_id != last_sent:
-                        msg = format_message(trade)
-                        send_telegram_message(msg)
-                        save_last_sent(unique_id)
+def send_trade_now():
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, "r") as file:
+            data = json.load(file)
+            if data:
+                trade = data[0]
+                unique_id = f"{trade['ticker']}_{trade['contract']}"
+                last_sent = load_last_sent()
+                if unique_id != last_sent:
+                    msg = format_message(trade)
+                    send_telegram_message(msg)
+                    save_last_sent(unique_id)
 
 if __name__ == "__main__":
-    while True:
-        check_and_send()
-        import time
-        time.sleep(60)
+    send_trade_now()
